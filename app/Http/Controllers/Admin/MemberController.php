@@ -67,6 +67,35 @@ class MemberController extends Controller
         // return response()->json($users);
         return view('admin.member.table', compact('users'));
     }
+
+    public function loadPhone(Request $request)
+    {
+        // dd($request->all());
+        $auser = Auth::user();
+        $users_query = User::join('members', 'members.user_id', '=', 'users.id')
+            ->join('member_types', 'member_types.id', '=', 'members.member_type_id')
+            ->join('member_levels', 'member_levels.id', '=', 'members.member_level_id')
+            ->select(
+                DB::raw(
+                    'users.id,
+                    users.name,
+                    users.phone'
+                )
+            );
+        if ($request->filled('ward')) {
+            $users_query = $users_query->whereIn('members.ward', $request->ward);
+        }
+        if ($request->filled('ml')) {
+            $users_query = $users_query->whereIn('members.member_level_id', $request->ml);
+        }
+        if ($request->filled('mt')) {
+            $users_query = $users_query->whereIn('members.member_type_id', $request->mt);
+        }
+        // dd($users_query->toSql(),$users_query->getBindings());
+        $users = $users_query->where('users.nagarcode', $auser->nagarcode)->get();
+        return response()->json($users);
+        // return view('admin.member.table', compact('users'));
+    }
     public function add(Request  $request)
     {
         $auser = Auth::user();
@@ -88,6 +117,7 @@ class MemberController extends Controller
             $member->member_level_id = $request->member_level_id;
             $member->bg = $request->bg;
             $member->fc = $request->fc;
+            $member->desc = $request->desc;
             $member->occupation = $request->occupation;
             $member->address = $request->address;
             if ($request->hasFile('image')) {
@@ -108,7 +138,8 @@ class MemberController extends Controller
     {
         if ($request->getMethod() == "POST") {
             // dd($request->all());
-            
+
+
             $member->email = $request->email;
             $member->phone = $request->phone;
             $member->name = $request->name;
@@ -120,13 +151,14 @@ class MemberController extends Controller
             $_member->member_level_id = $request->member_level_id;
             $_member->bg = $request->bg;
             $_member->fc = $request->fc;
+            $_member->desc = $request->desc;
             $_member->occupation = $request->occupation;
             $_member->address = $request->address;
             if ($request->hasFile('image')) {
                 $_member->image = $request->image->store('member/' . Carbon::now()->format('Y/m/d'));
             }
             $_member->save();
-            return redirect()->back()->with('message','Member Updated Sucessfully');
+            return redirect()->back()->with('message', 'Member Updated Sucessfully');
         } else {
 
             return view('admin.member.edit', [
@@ -137,6 +169,22 @@ class MemberController extends Controller
         }
     }
 
+    public function channels(Request  $request, User $member)
+    {
+        $data = [];
+
+        $m = $member->member;
+        array_push($data, $member->nagarcode);
+
+        array_push($data, $member->nagarcode . "_" . $m->ward);
+        array_push($data, $member->nagarcode . "_" . $m->member_type_id);
+        array_push($data, $member->nagarcode . "_" . $m->member_level_id);
+
+        array_push($data, $member->nagarcode . "_" . $m->ward . "_" . $m->member_type_id);
+        array_push($data, $member->nagarcode . "_" . $m->ward . "_" . $m->member_level_id);
+
+        dd($data);
+    }
     public function del(Request $request)
     {
         Member::where('user_id', $request->id)->delete();

@@ -1,5 +1,8 @@
 @extends('layout.app')
-
+@section('css')
+    <!-- include summernote css/js -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+@endsection
 @section('s-title')
 / <a href="{{route('admin.member.index')}}">Members</a> / Edit / {{$member->name}}
 @endsection
@@ -102,6 +105,13 @@
                 </div>
             </div>
             <div class="col-md-12">
+                <div class="form-group">
+                    <label for="">Description</label> <br>
+                    <textarea  name="desc" id="desc" class="form-control">{{$member->member->desc}}</textarea>
+                    
+                </div>
+            </div>
+            <div class="col-md-12">
                 <hr>
             </div>
 
@@ -118,10 +128,13 @@
 </div>
 @endsection
 @section('script')
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script>
   
     $(document).ready(function() {
         document.getElementById('image').addEventListener("change",readImage);
+        $('#desc').summernote();
+
     });
     function readImage() {
         

@@ -224,6 +224,7 @@
     @if(Session::has('message') || Session::has('error') || Session::has('warning') || Session::has('info'))
         @include('layout.toastr')
     @endif
+    @include('layout.firebase')
     @yield('script')
 </body>
 

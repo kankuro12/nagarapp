@@ -25,4 +25,23 @@ class AuthController extends Controller
             return view('login');
         }
     }
+
+    public function simpleLogin(Request $request){
+        if($request->getMethod()=="POST"){
+            $data=$request->validate([
+                'phone'=>'required',
+                'password'=>'required'
+            ]);
+            // dd($request->all());
+            if(Auth::attempt(['phone' => $request->phone, 'password' => $request->password],$request->filled('me')))
+            {
+                return redirect()->route('dashboard')->with('message',Auth::user()->name. ' Logged In Sucessfuly');
+            }else{
+                return redirect()->back()->with('error','Login Failed Please Retry');
+            }
+
+        }else{
+            return view('userlogin');
+        }
+    }
 }

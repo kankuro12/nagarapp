@@ -41,12 +41,12 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user" action="{{route('admin.login')}}" method="POST">
+                                    <form class="user" action="{{route('login')}}" method="POST">
                                         @csrf
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp" name="email"
-                                                placeholder="Enter Email Address...">
+                                            <input type="text" class="form-control form-control-user"
+                                                id="exampleInputEmail" aria-describedby="emailHelp" name="phone"
+                                                placeholder="Enter Phone Number">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
