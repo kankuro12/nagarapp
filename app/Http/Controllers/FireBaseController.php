@@ -40,7 +40,7 @@ class FireBaseController extends Controller
             $member = $user;
             $m = $member->member;
             $ng = 'mun_' . str_replace(':', '_', $member->nagarcode);
-            array_push($data, 'mun_' . $ng);
+            array_push($data,  $ng);
             array_push($data, $ng . "_wd_" . $m->ward);
             array_push($data, $ng . "_mt_" . $m->member_type_id);
             array_push($data, $ng . "_ml_" . $m->member_level_id);
@@ -63,28 +63,29 @@ class FireBaseController extends Controller
     public function test($id, Request $request)
     {
         // dd(storage_path('app/firebase.json'));
-        $factory = (new Factory)->withServiceAccount(storage_path('app/firebase.json'));
-        $messaging = $factory->createMessaging();
+        // $factory = (new Factory)->withServiceAccount(storage_path('app/firebase.json'));
+        // $messaging = $factory->createMessaging();
         $deviceToken = 'dLo9BTGxp6OX7J547Rh3Kx:APA91bEIES7qqZIngUyuiEATFSslXq4_ONK28K79_HCKOaiQCAnfCDsQlN83-JWIWMQBd5J00_Ayl5uYpvuua40C1TOrfk0MR8oA2FVqTxVFPAJJhf-phGs3soNiNK1niWd2QclWHFEa';
         // $message = CloudMessage::withTarget('token', $deviceToken)
         //     ->withNotification(Notification::create('Title', 'Body'));
 
         // $messaging->send($message);
-        $data=[];
+        // $data=[];
         // $message = CloudMessage::withTarget('topic', '44_2')
         //     ->withNotification(Notification::create('Title', 'Body'));
         // $messaging->send($message);
-        $member = User::Find($id);
-        $m = $member->member;
-        $ng = 'mun_' . str_replace(':', '_', $member->nagarcode);
-        array_push($data, 'mun_::' . $ng);
-        array_push($data, $ng . "_wd_" . $m->ward);
-        array_push($data, $ng . "_mt_" . $m->member_type_id);
-        array_push($data, $ng . "_ml_" . $m->member_level_id);
-        array_push($data, $ng . "_wd_" . $m->ward . "_mt_" . $m->member_type_id);
-        array_push($data, $ng . "_wd_" . $m->ward . "_ml_" . $m->member_level_id);
-        $result = $messaging->subscribeToTopics($data, $deviceToken);
-        dd($result);
+        // $member = User::Find($id);
+        // $m = $member->member;
+        // $ng = 'mun_' . str_replace(':', '_', $member->nagarcode);
+        // array_push($data,  $ng);
+        // array_push($data, $ng . "_wd_" . $m->ward);
+        // array_push($data, $ng . "_mt_" . $m->member_type_id);
+        // array_push($data, $ng . "_ml_" . $m->member_level_id);
+        // array_push($data, $ng . "_wd_" . $m->ward . "_mt_" . $m->member_type_id);
+        // array_push($data, $ng . "_wd_" . $m->ward . "_ml_" . $m->member_level_id. "_mt_" . $m->member_type_id);
+        // array_push($data, $ng . "_wd_" . $m->ward . "_ml_" . $m->member_level_id);
+        // $result = $messaging->subscribeToTopics($data, $deviceToken);
+        // dd($result);
         // $tokenHolder=PushKey::where('user_id',$id)->where('token',$request->token)->first();
         // if($tokenHolder==null){
         //     $tokenHolder=new PushKey();
@@ -93,5 +94,11 @@ class FireBaseController extends Controller
         //     $tokenHolder->subscribed=0;
         //     // $tokenHolder->save();
         // }
+
+        $tokenHolder = new PushKey();
+        $tokenHolder->user_id = $id;
+        $tokenHolder->token = $deviceToken;
+        $tokenHolder->subscribed = 1;
+        $tokenHolder->save();
     }
 }

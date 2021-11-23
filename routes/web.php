@@ -66,6 +66,7 @@ Route::middleware(['adminauth'])->group(function () {
         Route::name('alert.')->prefix('alert')->group(function(){
             Route::get('', [AlertController::class,'index'])->name('index');
             Route::get('add', [AlertController::class,'add'])->name('add');
+            Route::post('save', [AlertController::class,'save'])->name('save');
         });
     });
     Route::get('/', function () {

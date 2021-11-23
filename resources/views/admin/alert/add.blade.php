@@ -34,11 +34,11 @@
                 <div class="form-group">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="is_push" value="1" >
-                        <label class="form-check-label" for="ss">App Notification</label>
+                        <label class="form-check-label" for="is_push">App Notification</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="is_sms" value="1" >
-                        <label class="form-check-label" for="ss">SMS</label>
+                        <label class="form-check-label" for="is_sms">SMS</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="ss" value="true" onchange="toogleFilter(this);" checked>
@@ -51,7 +51,7 @@
                     @php
                         $mls=\App\Models\MemberLevel::select('id','name')->get();
                         $mts=\App\Models\MemberType::select('id','name')->get();
-                        $wards=\App\Models\Member::join('users','users.id','=','members.user_id')->distinct('members.ward')->where('users.nagarcode',Auth::user()->nagarcode)->pluck('members.ward');
+                        $wards=\App\Models\Member::join('users','users.id','=','members.user_id')->distinct('members.ward')->orderBy('members.ward')->where('users.nagarcode',Auth::user()->nagarcode)->pluck('members.ward');
                     @endphp
                 <form class="mb-4" id="selector-table"  target="_blank" method="POST" onsubmit="return selectMembers(this,event);">
                     @csrf
@@ -120,7 +120,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <button class="btn btn-primary">Send Alert</button>
+                <button class="btn btn-primary" onclick="save()">Send Alert</button>
             </div>
         </div>
     </div>
@@ -155,7 +155,7 @@
             html='';
             res.data.forEach(element => {
                 html+='<tr class="person-holder" data-person_name="'+element.name+'"  data-person_phone="'+element.phone+'" onclick="personSelect('+element.id+')">'
-                +'<td><input type="checkbox" name="person[]" id="person-'+element.id+'" class="person"></td>'
+                +'<td><input type="checkbox" name="person[]" id="person-'+element.id+'" value="'+element.id+'" class="person"></td>'
                 +'<td>'+element.name+'</td>'
                 +'<td>'+element.phone+'</td>'
                 +'</tr>';
@@ -185,13 +185,59 @@
         $('.person-holder').each(function (index, element) {
             var name=element.dataset.person_name;
             var phone=element.dataset.person_phone;
-            if(name.toLowerCase().startsWith(keyword_name) && phone.toLowerCase().startsWith(keyword_phone)){
+            if(name.toLowerCase().includes(keyword_name) && phone.toLowerCase().startsWith(keyword_phone)){
                 $(element).removeClass('d-none');
             }else{
                 $(element).addClass('d-none');
-
             }
         });
+    }
+
+    function save(){
+       data=[];
+       data['title']=$('#title').val();
+       data['message']=$('#message').val();
+
+       if(data['title'].length==0 || data['message'].length==0){
+           toastr.warning('Plese Enter Title and Message');
+           return;
+       }
+       data['ml']=$('#ml').val();
+       data['mt']=$('#mt').val();
+       data['ward']=$('#ward').val();
+       data['ss']=document.getElementById('ss').checked?1:0;
+       data['is_sms']=document.getElementById('is_sms').checked?1:0;
+       data['is_push']=document.getElementById('is_push').checked?1:0;
+       if(data['is_sms']==0 && data['is_push']==0){
+            toastr.warning('Plese Select At least One Message Options (SMS OR PUSH)');
+           return;
+       }
+       data['sel_all']=0;
+       data['ids']=[];
+
+       if(!data['ss']==1){
+           if($(".person").length==0 || $(".person:checked").length==0){
+               toastr.warning('Please Load And Select Data For Sending Message');
+               return;
+           }
+           data['sel_all']=$(".person:not(:checked)").length==0?1:0;
+           if(data['sel_all']==1){
+
+           }else{
+                $('.person:checked').each(function (index, element) {
+                   data['ids'].push(element.value);
+                });
+           }
+
+       }
+
+       json = {...data};
+       console.log(data,json);
+
+       axios.post('{{route('admin.alert.save')}}',json)
+       .then((res)=>{
+            console.log(res.data);
+       });
     }
 </script>
 @endsection

@@ -9,7 +9,7 @@ class Alert extends Model
 {
     use HasFactory;
     protected $casts = [
-        'numbers' => 'array',
+        'ids' => 'array',
         'channels' => 'array',
         'is_sms'=>'boolean',
         'is_push'=>'boolean'

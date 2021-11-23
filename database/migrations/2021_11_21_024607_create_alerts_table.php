@@ -15,11 +15,13 @@ class CreateAlertsTable extends Migration
     {
         Schema::create('alerts', function (Blueprint $table) {
             $table->id();
+            $table->string('title',160);
             $table->string('msg',160);
-            $table->text('numbers')->nullable();
             $table->boolean('is_push')->default(false);
             $table->boolean('is_sms')->default(false);
+            $table->text('ids')->nullable();
             $table->text('channels')->nullable();
+            $table->text('data')->nullable();
             $table->timestamps();
         });
     }
