@@ -15,6 +15,11 @@ class CreateNewsTable extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
+            $table->text('title');
+            $table->text('content');
+            $table->text('image');
+            $table->unsignedBigInteger('user_id');
+            $table->string('nagarcode',10)->default('44:2');
             $table->timestamps();
         });
     }

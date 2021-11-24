@@ -70,6 +70,11 @@
                   <i class="fas fa-fw fa-user"></i>
                   <span>Samiti</span></a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.news.index') }}">
+                <i class="fas fa-fw fa-user"></i>
+                <span>News</span></a>
+        </li>
       @endif
 
       <!-- Divider -->

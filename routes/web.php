@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AlertController;
 use App\Http\Controllers\Admin\MemberController;
+use App\Http\Controllers\Admin\NewsControoller;
 use App\Http\Controllers\Admin\SamitiController;
 use App\Http\Controllers\Admin\SamitiMemberController;
 use App\Http\Controllers\AdminController;
@@ -87,6 +88,14 @@ Route::middleware(['adminauth'])->group(function () {
                 Route::match(['get', 'post'],'del/{member}', [SamitiMemberController::class,'del'])->name('del');
 
             });
+        });
+
+        Route::name('news.')->prefix('news')->group(function(){
+            Route::match(['get', 'post'],'', [NewsControoller::class,'index'])->name('index');
+            Route::match(['get', 'post'],'add', [NewsControoller::class,'add'])->name('add');
+            Route::match(['get', 'post'],'edit/{news}', [NewsControoller::class,'edit'])->name('edit');
+            Route::match(['get', 'post'],'del/{news}', [NewsControoller::class,'del'])->name('del');
+
         });
     });
     Route::get('/', function () {
