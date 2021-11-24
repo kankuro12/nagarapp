@@ -2,10 +2,13 @@
 
 use App\Http\Controllers\Admin\AlertController;
 use App\Http\Controllers\Admin\MemberController;
+use App\Http\Controllers\Admin\SamitiController;
+use App\Http\Controllers\Admin\SamitiMemberController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FireBaseController;
 use App\Http\Controllers\SettingController;
+use App\Models\SamitiMember;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,7 +69,24 @@ Route::middleware(['adminauth'])->group(function () {
         Route::name('alert.')->prefix('alert')->group(function(){
             Route::get('', [AlertController::class,'index'])->name('index');
             Route::get('add', [AlertController::class,'add'])->name('add');
+            Route::get('view/{alert}', [AlertController::class,'show'])->name('view');
+            Route::get('resend/{alert}', [AlertController::class,'resend'])->name('resend');
+            Route::get('del/{alert}', [AlertController::class,'del'])->name('del');
             Route::post('save', [AlertController::class,'save'])->name('save');
+        });
+        Route::name('samiti.')->prefix('samiti')->group(function(){
+            Route::get('', [SamitiController::class,'index'])->name('index');
+            Route::match(['get', 'post'],'add', [SamitiController::class,'add'])->name('add');
+            Route::match(['get', 'post'],'edit/{samiti}', [SamitiController::class,'edit'])->name('edit');
+            Route::match(['get', 'post'],'del/{samiti}', [SamitiController::class,'del'])->name('del');
+            Route::match(['get', 'post'],'view/{samiti}', [SamitiController::class,'view'])->name('view');
+
+            Route::name('member.')->prefix('member')->group(function(){
+                Route::match(['get', 'post'],'add/{samiti_id}', [SamitiMemberController::class,'add'])->name('add');
+                Route::match(['get', 'post'],'edit/{member}', [SamitiMemberController::class,'edit'])->name('edit');
+                Route::match(['get', 'post'],'del/{member}', [SamitiMemberController::class,'del'])->name('del');
+
+            });
         });
     });
     Route::get('/', function () {

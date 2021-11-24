@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SMSMock extends Model
 {
+    protected $fillable = ['to','text'];
     use HasFactory;
 
     public function getData($token){

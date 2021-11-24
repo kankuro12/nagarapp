@@ -65,11 +65,11 @@
                 </div>
             </div>
         </li>
-          {{-- <li class="nav-item">
-              <a class="nav-link" href="{{ route('admin.member.index') }}">
+          <li class="nav-item">
+              <a class="nav-link" href="{{ route('admin.samiti.index') }}">
                   <i class="fas fa-fw fa-user"></i>
-                  <span>Members</span></a>
-          </li> --}}
+                  <span>Samiti</span></a>
+          </li>
       @endif
 
       <!-- Divider -->

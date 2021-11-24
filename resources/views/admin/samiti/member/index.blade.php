@@ -6,11 +6,11 @@
 
 @endsection
 @section('toolbar')
-<a href="{{route('admin.alert.add')}}" target="_blank" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-    class="fas fa-plus fa-sm text-white-50"></i> Add Alert</a>
+<a href="{{route('admin.samiti.member.add',['samiti_id'=>$samiti->id])}}" target="_blank" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+    class="fas fa-plus fa-sm text-white-50"></i> Add Member</a>
 @endsection
 @section('s-title')
-/ Alerts
+/ <a href="{{route('admin.samiti.index')}}">Samitis</a> / {{$samiti->name}}
 @endsection
 @section('content')
 
@@ -23,38 +23,28 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Message</th>
-                        <th>Sent</th>
-
+                        <th>name</th>
+                        <th>Phone</th>
+                        <th>Address</th>
                         <th></th>
                     </tr>
                 </thead>
                 <body>
-                    @foreach ($alerts as $alert)
-                        <tr id="row-{{$alert->id}}">
+                    @foreach ($members as $member)
+                        <tr id="row-{{$member->id}}">
                             <th>
-                                {{$alert->title}}
+                                {{$member->name}}
                             </th>
                             <td>
-                                {{$alert->msg}}
+                                {{$member->phone}}
                             </td>
                             <td>
-                                {{$alert->created_at}}
+                                {{$member->address}}
                             </td>
 
                             <td>
-                                <div class="dropdown">
-                                    <button class="btn btn-success " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      <i class="fas fa-bars"></i>
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="{{route('admin.alert.view',['alert'=>$alert->id])}}" >View</a>
-                                        {{-- <a class="dropdown-item" href="{{route('admin.member.del',['member'=>$alert->id])}}" >Del</a> --}}
-                                        <a class="dropdown-item" href="{{route('admin.alert.del',['alert'=>$alert->id])}}" >Del</a>
-                                    </div>
-                                  </div>
-
+                                <a class="btn btn-success" href="{{route('admin.samiti.member.edit',['member'=>$member->id])}}" >Edit</a>
+                                <a class="btn btn-danger" href="{{route('admin.samiti.member.del',['member'=>$member->id])}}" >Del</a>
                             </td>
                         </tr>
                     @endforeach

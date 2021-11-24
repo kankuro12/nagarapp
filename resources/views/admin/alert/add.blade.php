@@ -13,6 +13,75 @@
        display: sticky;
        top:0px;
     }
+    .spinner {
+  margin: 100px auto;
+  font-size: 25px;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-animation: load5 1.1s infinite ease;
+  animation: load5 1.1s infinite ease;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+@-webkit-keyframes load5 {
+  0%,
+  100% {
+    box-shadow: 0em -2.6em 0em 0em #3259ca, 1.8em -1.8em 0 0em rgba(50,89,202, 0.2), 2.5em 0em 0 0em rgba(50,89,202, 0.2), 1.75em 1.75em 0 0em rgba(50,89,202, 0.2), 0em 2.5em 0 0em rgba(50,89,202, 0.2), -1.8em 1.8em 0 0em rgba(50,89,202, 0.2), -2.6em 0em 0 0em rgba(50,89,202, 0.5), -1.8em -1.8em 0 0em rgba(50,89,202, 0.7);
+  }
+  12.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(50,89,202, 0.7), 1.8em -1.8em 0 0em #3259ca, 2.5em 0em 0 0em rgba(50,89,202, 0.2), 1.75em 1.75em 0 0em rgba(50,89,202, 0.2), 0em 2.5em 0 0em rgba(50,89,202, 0.2), -1.8em 1.8em 0 0em rgba(50,89,202, 0.2), -2.6em 0em 0 0em rgba(50,89,202, 0.2), -1.8em -1.8em 0 0em rgba(50,89,202, 0.5);
+  }
+  25% {
+    box-shadow: 0em -2.6em 0em 0em rgba(50,89,202, 0.5), 1.8em -1.8em 0 0em rgba(50,89,202, 0.7), 2.5em 0em 0 0em #3259ca, 1.75em 1.75em 0 0em rgba(50,89,202, 0.2), 0em 2.5em 0 0em rgba(50,89,202, 0.2), -1.8em 1.8em 0 0em rgba(50,89,202, 0.2), -2.6em 0em 0 0em rgba(50,89,202, 0.2), -1.8em -1.8em 0 0em rgba(50,89,202, 0.2);
+  }
+  37.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(50,89,202, 0.2), 1.8em -1.8em 0 0em rgba(50,89,202, 0.5), 2.5em 0em 0 0em rgba(50,89,202, 0.7), 1.75em 1.75em 0 0em #3259ca, 0em 2.5em 0 0em rgba(50,89,202, 0.2), -1.8em 1.8em 0 0em rgba(50,89,202, 0.2), -2.6em 0em 0 0em rgba(50,89,202, 0.2), -1.8em -1.8em 0 0em rgba(50,89,202, 0.2);
+  }
+  50% {
+    box-shadow: 0em -2.6em 0em 0em rgba(50,89,202, 0.2), 1.8em -1.8em 0 0em rgba(50,89,202, 0.2), 2.5em 0em 0 0em rgba(50,89,202, 0.5), 1.75em 1.75em 0 0em rgba(50,89,202, 0.7), 0em 2.5em 0 0em #3259ca, -1.8em 1.8em 0 0em rgba(50,89,202, 0.2), -2.6em 0em 0 0em rgba(50,89,202, 0.2), -1.8em -1.8em 0 0em rgba(50,89,202, 0.2);
+  }
+  62.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(50,89,202, 0.2), 1.8em -1.8em 0 0em rgba(50,89,202, 0.2), 2.5em 0em 0 0em rgba(50,89,202, 0.2), 1.75em 1.75em 0 0em rgba(50,89,202, 0.5), 0em 2.5em 0 0em rgba(50,89,202, 0.7), -1.8em 1.8em 0 0em #3259ca, -2.6em 0em 0 0em rgba(50,89,202, 0.2), -1.8em -1.8em 0 0em rgba(50,89,202, 0.2);
+  }
+  75% {
+    box-shadow: 0em -2.6em 0em 0em rgba(50,89,202, 0.2), 1.8em -1.8em 0 0em rgba(50,89,202, 0.2), 2.5em 0em 0 0em rgba(50,89,202, 0.2), 1.75em 1.75em 0 0em rgba(50,89,202, 0.2), 0em 2.5em 0 0em rgba(50,89,202, 0.5), -1.8em 1.8em 0 0em rgba(50,89,202, 0.7), -2.6em 0em 0 0em #3259ca, -1.8em -1.8em 0 0em rgba(50,89,202, 0.2);
+  }
+  87.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(50,89,202, 0.2), 1.8em -1.8em 0 0em rgba(50,89,202, 0.2), 2.5em 0em 0 0em rgba(50,89,202, 0.2), 1.75em 1.75em 0 0em rgba(50,89,202, 0.2), 0em 2.5em 0 0em rgba(50,89,202, 0.2), -1.8em 1.8em 0 0em rgba(50,89,202, 0.5), -2.6em 0em 0 0em rgba(50,89,202, 0.7), -1.8em -1.8em 0 0em #3259ca;
+  }
+}
+@keyframes load5 {
+  0%,
+  100% {
+    box-shadow: 0em -2.6em 0em 0em #3259ca, 1.8em -1.8em 0 0em rgba(50,89,202, 0.2), 2.5em 0em 0 0em rgba(50,89,202, 0.2), 1.75em 1.75em 0 0em rgba(50,89,202, 0.2), 0em 2.5em 0 0em rgba(50,89,202, 0.2), -1.8em 1.8em 0 0em rgba(50,89,202, 0.2), -2.6em 0em 0 0em rgba(50,89,202, 0.5), -1.8em -1.8em 0 0em rgba(50,89,202, 0.7);
+  }
+  12.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(50,89,202, 0.7), 1.8em -1.8em 0 0em #3259ca, 2.5em 0em 0 0em rgba(50,89,202, 0.2), 1.75em 1.75em 0 0em rgba(50,89,202, 0.2), 0em 2.5em 0 0em rgba(50,89,202, 0.2), -1.8em 1.8em 0 0em rgba(50,89,202, 0.2), -2.6em 0em 0 0em rgba(50,89,202, 0.2), -1.8em -1.8em 0 0em rgba(50,89,202, 0.5);
+  }
+  25% {
+    box-shadow: 0em -2.6em 0em 0em rgba(50,89,202, 0.5), 1.8em -1.8em 0 0em rgba(50,89,202, 0.7), 2.5em 0em 0 0em #3259ca, 1.75em 1.75em 0 0em rgba(50,89,202, 0.2), 0em 2.5em 0 0em rgba(50,89,202, 0.2), -1.8em 1.8em 0 0em rgba(50,89,202, 0.2), -2.6em 0em 0 0em rgba(50,89,202, 0.2), -1.8em -1.8em 0 0em rgba(50,89,202, 0.2);
+  }
+  37.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(50,89,202, 0.2), 1.8em -1.8em 0 0em rgba(50,89,202, 0.5), 2.5em 0em 0 0em rgba(50,89,202, 0.7), 1.75em 1.75em 0 0em #3259ca, 0em 2.5em 0 0em rgba(50,89,202, 0.2), -1.8em 1.8em 0 0em rgba(50,89,202, 0.2), -2.6em 0em 0 0em rgba(50,89,202, 0.2), -1.8em -1.8em 0 0em rgba(50,89,202, 0.2);
+  }
+  50% {
+    box-shadow: 0em -2.6em 0em 0em rgba(50,89,202, 0.2), 1.8em -1.8em 0 0em rgba(50,89,202, 0.2), 2.5em 0em 0 0em rgba(50,89,202, 0.5), 1.75em 1.75em 0 0em rgba(50,89,202, 0.7), 0em 2.5em 0 0em #3259ca, -1.8em 1.8em 0 0em rgba(50,89,202, 0.2), -2.6em 0em 0 0em rgba(50,89,202, 0.2), -1.8em -1.8em 0 0em rgba(50,89,202, 0.2);
+  }
+  62.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(50,89,202, 0.2), 1.8em -1.8em 0 0em rgba(50,89,202, 0.2), 2.5em 0em 0 0em rgba(50,89,202, 0.2), 1.75em 1.75em 0 0em rgba(50,89,202, 0.5), 0em 2.5em 0 0em rgba(50,89,202, 0.7), -1.8em 1.8em 0 0em #3259ca, -2.6em 0em 0 0em rgba(50,89,202, 0.2), -1.8em -1.8em 0 0em rgba(50,89,202, 0.2);
+  }
+  75% {
+    box-shadow: 0em -2.6em 0em 0em rgba(50,89,202, 0.2), 1.8em -1.8em 0 0em rgba(50,89,202, 0.2), 2.5em 0em 0 0em rgba(50,89,202, 0.2), 1.75em 1.75em 0 0em rgba(50,89,202, 0.2), 0em 2.5em 0 0em rgba(50,89,202, 0.5), -1.8em 1.8em 0 0em rgba(50,89,202, 0.7), -2.6em 0em 0 0em #3259ca, -1.8em -1.8em 0 0em rgba(50,89,202, 0.2);
+  }
+  87.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(50,89,202, 0.2), 1.8em -1.8em 0 0em rgba(50,89,202, 0.2), 2.5em 0em 0 0em rgba(50,89,202, 0.2), 1.75em 1.75em 0 0em rgba(50,89,202, 0.2), 0em 2.5em 0 0em rgba(50,89,202, 0.2), -1.8em 1.8em 0 0em rgba(50,89,202, 0.5), -2.6em 0em 0 0em rgba(50,89,202, 0.7), -1.8em -1.8em 0 0em #3259ca;
+  }
+}
+
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
@@ -20,7 +89,7 @@
 / <a href="{{route('admin.alert.index')}}">Alerts</a> / Add
 @endsection
 @section('content')
-    <div class="card mb-4 shadow">
+    <div class="card mb-4 shadow" id="sender">
         <div class="card-body">
             <div class="form-group">
                 <label for="title">Title</label>
@@ -122,6 +191,13 @@
             <div class="form-group">
                 <button class="btn btn-primary" onclick="save()">Send Alert</button>
             </div>
+        </div>
+    </div>
+
+
+    <div class="card mb-4 shadow d-none" id="loader">
+        <div class="card-body">
+            <div class="spinner"></div>
         </div>
     </div>
 
@@ -234,9 +310,13 @@
        json = {...data};
        console.log(data,json);
 
+       $('#sender').addClass('d-none');
+       $('#loader').removeClass('d-none');
        axios.post('{{route('admin.alert.save')}}',json)
        .then((res)=>{
-            console.log(res.data);
+            if(res.data.status){
+                location.href = res.data.link;
+            }
        });
     }
 </script>

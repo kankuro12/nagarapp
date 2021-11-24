@@ -15,12 +15,27 @@ class AlertController extends Controller
 {
     public function index()
     {
-        $channels = [];
-        return view('admin.alert.index');
+        $user = Auth::user();
+        $alerts=Alert::where('nagarcode',$user->nagarcode)->orderBy('id','desc')->get();
+        return view('admin.alert.index',compact('alerts'));
     }
     public function add()
     {
         return view('admin.alert.add');
+    }
+
+    public function show(Alert $alert){
+        return view('admin.alert.view',compact('alert'));
+    }
+    public function resend(Alert $alert){
+        AlertHelper::send($alert);
+        return response()->json(['status'=>true]);
+    }
+
+    public function del(Alert $alert){
+        $title=$alert->title;
+        $alert->delete();
+        return redirect()->back()->with('message',$title." Deletetd Sucessfully");
     }
 
     public function save(Request $request)
@@ -29,6 +44,7 @@ class AlertController extends Controller
         $user = Auth::user();
         $alert = new Alert();
         $alert->title = $request->title;
+        $alert->nagarcode = $user->nagarcode;
         $alert->msg = $request->message;
         $alert->is_push = $request->is_push;
         $alert->is_sms = $request->is_sms;
@@ -108,6 +124,6 @@ class AlertController extends Controller
         $alert->data=json_encode(new AlertData($request));
         $alert->save();
         AlertHelper::send($alert);
-        return response()->json($alert);
+        return response()->json(['status'=>true,'link'=>route('admin.alert.view',['alert'=>$alert->id])]);
     }
 }
