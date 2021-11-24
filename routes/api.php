@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\MainController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::match(['get', 'post'], 'samiti',[MainController::class,'samiti']);
+Route::match(['get', 'post'], 'news',[MainController::class,'news']);
+Route::match(['get', 'post'], 'member',[MainController::class,'member']);

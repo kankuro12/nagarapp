@@ -86,7 +86,6 @@ Route::middleware(['adminauth'])->group(function () {
                 Route::match(['get', 'post'],'add/{samiti_id}', [SamitiMemberController::class,'add'])->name('add');
                 Route::match(['get', 'post'],'edit/{member}', [SamitiMemberController::class,'edit'])->name('edit');
                 Route::match(['get', 'post'],'del/{member}', [SamitiMemberController::class,'del'])->name('del');
-
             });
         });
 
