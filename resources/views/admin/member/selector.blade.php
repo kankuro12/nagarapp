@@ -1,7 +1,7 @@
 @php
     $mls=\App\Models\MemberLevel::select('id','name')->get();
     $mts=\App\Models\MemberType::select('id','name')->get();
-    $wards=\App\Models\Member::join('users','users.id','=','members.user_id')->distinct('members.ward')->where('users.nagarcode',Auth::user()->nagarcode)->pluck('members.ward');
+    $wards=\App\Models\Member::join('users','users.id','=','members.user_id')->distinct('members.ward')->where('users.nagarcode',Auth::user()->nagarcode)->orderBy('members.ward')->pluck('members.ward');
 @endphp
 <form id="selector-table" action="{{route('admin.member.load')}}" target="_blank" method="POST" onsubmit="return loadTableFromSelector(this,event);">
     @csrf

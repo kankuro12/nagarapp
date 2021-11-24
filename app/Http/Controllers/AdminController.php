@@ -40,7 +40,7 @@ class AdminController extends Controller
         if($request->getMethod()=="POST"){
             $user=new User();
             $user->email=$request->email;
-            $user->password=bcrypt($request->email);
+            $user->password=bcrypt($request->password);
             $user->phone=$request->phone;
             $user->name=$request->name;
             $user->nagarcode=$request->mun;

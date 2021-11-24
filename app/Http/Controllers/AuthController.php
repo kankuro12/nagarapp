@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('admin.login');
+    }
     public function login(Request $request){
         if($request->getMethod()=="POST"){
             $data=$request->validate([

@@ -31,6 +31,8 @@ Route::middleware(['guest'])->group(function () {
     });
 });
 
+Route::match(['get', 'post'], 'logout',[AuthController::class,'logout'])->name('logout');
+
 Route::middleware(['adminauth'])->group(function () {
 
     route::name('superadmin.')->middleware('level:0')->group(function(){
