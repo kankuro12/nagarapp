@@ -25,7 +25,6 @@ class AdminController extends Controller
     public function edit(Request $request,User $user){
         if($request->getMethod()=="POST"){
             $user->email=$request->email;
-            $user->password=bcrypt($request->password);
             $user->phone=$request->phone;
             $user->name=$request->name;
             $user->nagarcode=$request->mun;
