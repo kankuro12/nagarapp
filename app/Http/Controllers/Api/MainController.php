@@ -57,8 +57,7 @@ class MainController extends Controller
             return response()->json(['status' => false]);
         } else {
             $results = [];
-            if ($user->auth)
-                $factory = (new Factory)->withServiceAccount(storage_path('app/firebase.json'));
+            $factory = (new Factory)->withServiceAccount(storage_path('app/firebase.json'));
             $messaging = $factory->createMessaging();
             $tokenHolder = PushKey::where('token', $request->token)->first();
             if ($tokenHolder == null) {
@@ -76,6 +75,7 @@ class MainController extends Controller
                 }
             }
             if ($tokenHolder->subscribed == 0) {
+                $data=[];
                 $member = $user;
                 $m = $member->member;
                 $ng = 'mun_' . str_replace(':', '_', $member->nagarcode);
