@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::match(['GET', 'POST'], 'samiti',[MainController::class,'samiti']);
+Route::match(['GET', 'POST'], 'noti',[MainController::class,'noti']);
 Route::match(['GET', 'POST'], 'user',[MainController::class,'user']);
 Route::match(['GET', 'POST'], 'news',[MainController::class,'news']);
 Route::match(['GET', 'POST'], 'member',[MainController::class,'member']);

@@ -8,6 +8,7 @@ use App\Models\PushKey;
 use App\Models\Samiti;
 use App\Models\SamitiMember;
 use App\Models\User;
+use App\Models\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Kreait\Firebase\Factory;
@@ -29,6 +30,17 @@ class MainController extends Controller
     }
 
     public function news(Request $request)
+    {
+        $nagarcode = $request->nagarcode ?? '44:2';
+        $step = $request->step ?? 0;
+        if ($step == 0) {
+            $news = Alert::take(10)->orderBy('id', 'desc')->get();
+        } else {
+            $news = Alert::skip($step * 10)->take(10)->orderBy('id', 'desc')->get();
+        }
+        return response()->json(['data' => $news, 'hasmore' => Alert::count() > (($step + 1) * 10)]);
+    }
+    public function noti(Request $request)
     {
         $nagarcode = $request->nagarcode ?? '44:2';
         $step = $request->step ?? 0;
