@@ -34,22 +34,22 @@ class MainController extends Controller
         $nagarcode = $request->nagarcode ?? '44:2';
         $step = $request->step ?? 0;
         if ($step == 0) {
-            $news = Alert::take(10)->orderBy('id', 'desc')->get();
+            $news = News::take(10)->orderBy('id', 'desc')->get();
         } else {
-            $news = Alert::skip($step * 10)->take(10)->orderBy('id', 'desc')->get();
+            $news = News::skip($step * 10)->take(10)->orderBy('id', 'desc')->get();
         }
-        return response()->json(['data' => $news, 'hasmore' => Alert::count() > (($step + 1) * 10)]);
+        return response()->json(['data' => $news, 'hasmore' => News::count() > (($step + 1) * 10)]);
     }
     public function noti(Request $request)
     {
         $nagarcode = $request->nagarcode ?? '44:2';
         $step = $request->step ?? 0;
         if ($step == 0) {
-            $news = News::take(10)->orderBy('id', 'desc')->get();
+            $news = Alert::take(10)->orderBy('id', 'desc')->get();
         } else {
-            $news = News::skip($step * 10)->take(10)->orderBy('id', 'desc')->get();
+            $news = Alert::skip($step * 10)->take(10)->orderBy('id', 'desc')->get();
         }
-        return response()->json(['data' => $news, 'hasmore' => News::count() > (($step + 1) * 10)]);
+        return response()->json(['data' => $news, 'hasmore' => Alert::count() > (($step + 1) * 10)]);
     }
 
     public function user(Request $request)
