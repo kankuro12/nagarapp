@@ -19,8 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::match(['get', 'post'], 'samiti',[MainController::class,'samiti']);
-Route::match(['get', 'post'], 'user',[MainController::class,'user']);
-Route::match(['get', 'post'], 'news',[MainController::class,'news']);
-Route::match(['get', 'post'], 'member',[MainController::class,'member']);
-Route::match(['get', 'post'], 'subscribe',[MainController::class,'subscribe']);
+Route::match(['GET', 'POST'], 'samiti',[MainController::class,'samiti']);
+Route::match(['GET', 'POST'], 'user',[MainController::class,'user']);
+Route::match(['GET', 'POST'], 'news',[MainController::class,'news']);
+Route::match(['GET', 'POST'], 'member',[MainController::class,'member']);
+Route::match(['GET', 'POST'], 'subscribe',[MainController::class,'subscribe']);
