@@ -42,9 +42,10 @@ class MainController extends Controller
 
     public function user(Request $request)
     {
-        $phone=$request->phone;
-        dd($phone);
-        $user = User::where('phone', $request->phone)->where('level', 3)->first();
+        $phone=$request->phone.'';
+        // dd($phone);
+        // dd(User::where('phone', $request->phone)->where('level', 3));
+        $user = User::where('phone', $phone)->where('level', 3)->first();
         if ($user == null) {
             return response()->json(['status' => false]);
         } else {
