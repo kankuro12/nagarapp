@@ -67,7 +67,8 @@ class MainController extends Controller
 
     public function subscribe(Request $request)
     {
-        $user = User::where('phone', $request->phone)->where('level', 3)->first();
+        $phone=$request->phone.'';
+        $user = User::where('phone', $phone)->where('level', 3)->first();
         if ($user == null) {
             return response()->json(['status' => false]);
         } else {
