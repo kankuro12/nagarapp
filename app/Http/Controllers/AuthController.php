@@ -23,6 +23,7 @@ class AuthController extends Controller
             {
                 return redirect()->route('dashboard')->with('message',Auth::user()->name. ' Logged In Sucessfuly');
             }else{
+
                 return redirect()->back()->with('error','Login Failed Please Retry');
             }
 

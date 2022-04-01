@@ -59,6 +59,7 @@ class AlertController extends Controller
 
             if ($request->sel_all == 1) {
                 $arr1 = [];
+
                 if ($wc > 0 && $mlc > 0 && $mtc > 0) {
                     foreach ($request->ward as $w) {
                         foreach ($request->ml as $ml) {
@@ -111,7 +112,7 @@ class AlertController extends Controller
                 }
 
                 if ($wc == 0 && $mlc == 0 && $mtc == 0) {
-                    array_push($channels, 'mun_' . $ng);
+                    array_push($channels,  $ng);
                 }
 
             } else {

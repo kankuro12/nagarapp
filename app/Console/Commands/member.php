@@ -980,6 +980,17 @@ class member extends Command
 		"yardmaster",
 		"zoologist"
 	];
+
+    const bgs=[
+        "A+",
+        "B+",
+        "O+",
+        "AB+",
+        "A-",
+        "B-",
+        "O-",
+        "AB-"
+    ];
     /**
      * The name and signature of the console command.
      *
@@ -1012,14 +1023,19 @@ class member extends Command
     public function handle()
     {
         $i=0;
-        for ($i=0; $i <5000; $i++) {
+        $palikas=[];
+        for ($i=1; $i <= 17; $i++) {
+            array_push($palikas,"44:".$i);
+        }
+
+        for ($i=0; $i < 5000; $i++) {
             # code...
             $user = new User();
             $user->email ='test'.$i.'@gmail.com' ;
             $user->password = bcrypt('9800916365');
-            $user->phone = '9800916365';
+            $user->phone = 9900000000+$i;
             $user->name = 'test member'.$i;
-            $user->nagarcode = '44:2';
+            $user->nagarcode = $palikas[mt_rand(0,(count($palikas)-1))];
             $user->level = 3;
             $user->save();
 
@@ -1028,13 +1044,13 @@ class member extends Command
             $member->user_id = $user->id;
             $member->member_type_id =mt_rand(3,5);
             $member->member_level_id = mt_rand(3,5);
-            $member->bg = 'A+';
+            $member->bg = self::bgs[mt_rand(0,(count(self::bgs)-1))];;
             $member->fc = mt_rand(1,20);
-            $member->desc = '';
+            $member->desc = "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ex esse excepturi tempore, vel dolorum ipsum nisi qui, consequatur animi eaque ea provident deserunt, nulla veritatis voluptate! Recusandae modi itaque voluptas";
             $member->occupation = self::olist[mt_rand(0,(count(self::olist)-1))];
             $member->address = 'address-'.$i;
             $member->save();
-            echo 'member '.$i.' Added\n';
+            echo 'member '.$i.' Added'. PHP_EOL;
         }
         return Command::SUCCESS;
     }

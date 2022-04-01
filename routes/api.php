@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\DataController;
 use App\Http\Controllers\Api\MainController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,4 +25,8 @@ Route::match(['GET', 'POST'], 'noti',[MainController::class,'noti']);
 Route::match(['GET', 'POST'], 'user',[MainController::class,'user']);
 Route::match(['GET', 'POST'], 'news',[MainController::class,'news']);
 Route::match(['GET', 'POST'], 'member',[MainController::class,'member']);
+Route::match(['GET', 'POST'], 'single-member',[MainController::class,'singleMember']);
 Route::match(['GET', 'POST'], 'subscribe',[MainController::class,'subscribe']);
+
+
+Route::match(['get'],'init-date',[DataController::class,'init']);

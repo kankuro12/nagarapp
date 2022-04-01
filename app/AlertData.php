@@ -11,7 +11,7 @@ class AlertData
 
     function  __construct($request){
         $this->all=$request->ss;
-        $this->sel_all=$request->sell_all;
+        $this->sel_all=$request->sel_all??0;
         $this->ward=$request->ward;
         $this->mt=$request->mt;
         $this->ml=$request->ml;

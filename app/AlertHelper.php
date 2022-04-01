@@ -33,6 +33,7 @@ class AlertHelper
         $data = json_decode($alert->data);
         if ($alert->is_push) {
 
+
             if ($data->all == 1 || $data->sel_all == 1) {
                 foreach ($alert->channels as $channel) {
                     $message = CloudMessage::withTarget('topic', $channel)
@@ -41,6 +42,7 @@ class AlertHelper
                 }
             } else {
                 $tokens = PushKey::whereIn('user_id', $alert->ids)->pluck('token');
+
                 $message = CloudMessage::new()->withNotification(MessagingNotification::create($alert->title, $alert->msg));
                 if ($tokens->count() > 450) {
                     $count = $tokens->count();
@@ -62,7 +64,7 @@ class AlertHelper
                         $messaging->sendMulticast($message, $token_list);
                     }
                 } else {
-                    $messaging->sendMulticast($message, $tokens);
+                    $messaging->sendMulticast($message, $tokens->toArray());
                 }
             }
         }

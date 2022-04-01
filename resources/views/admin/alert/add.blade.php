@@ -169,7 +169,7 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        <input type="checkbox" name="person" id="person" onchange="personSelector(this)">
+                                        <input type="checkbox" name="sell_all" id="person" onchange="personSelector(this)">
                                         All
                                     </th>
                                     <th>
@@ -314,9 +314,16 @@
        $('#loader').removeClass('d-none');
        axios.post('{{route('admin.alert.save')}}',json)
        .then((res)=>{
-            if(res.data.status){
-                location.href = res.data.link;
-            }
+            // if(res.data.status){
+            //     location.href = res.data.link;
+            // }
+            $('#sender').removeClass('d-none');
+            $('#loader').addClass('d-none');
+       })
+       .catch((err)=>{
+            $('#sender').removeClass('d-none');
+            $('#loader').addClass('d-none');
+            toastr.error("some error occured, please Try again");
        });
     }
 </script>

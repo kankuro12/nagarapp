@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Kreait\Firebase\Factory;
 
+use function PHPSTORM_META\map;
+
 class MainController extends Controller
 {
     public function samiti(Request $request)
@@ -42,19 +44,30 @@ class MainController extends Controller
     }
     public function noti(Request $request)
     {
-        $nagarcode = $request->nagarcode ?? '44:2';
+        $phone = $request->phone . '';
+        $user = User::where('phone', $phone)->where('level', 3)->first();
         $step = $request->step ?? 0;
-        if ($step == 0) {
-            $news = Alert::take(10)->orderBy('id', 'desc')->get();
+
+        if ($user == null) {
+            return response()->json(['status' => false]);
         } else {
-            $news = Alert::skip($step * 10)->take(10)->orderBy('id', 'desc')->get();
+            $data = [];
+            $member = $user;
+            $m = $member->member;
+            $ng = 'mun_' . str_replace(':', '_', $member->nagarcode);
+            array_push($data,  $ng);
+            array_push($data, $ng . "_wd_" . $m->ward);
+            array_push($data, $ng . "_mt_" . $m->member_type_id);
+            array_push($data, $ng . "_ml_" . $m->member_level_id);
+            array_push($data, $ng . "_wd" . $m->ward . "_mt" . $m->member_type_id);
+            array_push($data, $ng . "_wd" . $m->ward . "_ml" . $m->member_level_id);
+            $news = News::skip($step * 10)->take(10)->orderBy('id', 'desc')->get();
         }
-        return response()->json(['data' => $news, 'hasmore' => Alert::count() > (($step + 1) * 10)]);
     }
 
     public function user(Request $request)
     {
-        $phone=$request->phone.'';
+        $phone = $request->phone . '';
         // dd($phone);
         // dd(User::where('phone', $request->phone)->where('level', 3));
         $user = User::where('phone', $phone)->where('level', 3)->first();
@@ -67,7 +80,7 @@ class MainController extends Controller
 
     public function subscribe(Request $request)
     {
-        $phone=$request->phone.'';
+        $phone = $request->phone . '';
         $user = User::where('phone', $phone)->where('level', 3)->first();
         if ($user == null) {
             return response()->json(['status' => false]);
@@ -91,7 +104,7 @@ class MainController extends Controller
                 }
             }
             if ($tokenHolder->subscribed == 0) {
-                $data=[];
+                $data = [];
                 $member = $user;
                 $m = $member->member;
                 $ng = 'mun_' . str_replace(':', '_', $member->nagarcode);
@@ -101,6 +114,7 @@ class MainController extends Controller
                 array_push($data, $ng . "_ml_" . $m->member_level_id);
                 array_push($data, $ng . "_wd" . $m->ward . "_mt" . $m->member_type_id);
                 array_push($data, $ng . "_wd" . $m->ward . "_ml" . $m->member_level_id);
+                array_push($data, $ng . "_wd_" . $m->ward . "_ml_" . $m->member_level_id . "_mt_" . $m->member_type_id);
                 $result = $messaging->subscribeToTopics($data, $request->token);
                 $error = false;
                 foreach ($result as $key => $value) {
@@ -122,7 +136,7 @@ class MainController extends Controller
         $nagarcode = $request->nagarcode ?? '44:2';
         $step = $request->step ?? 0;
         // dd($request->all());
-        $users_query = User::join('members', 'members.user_id', '=', 'users.id')
+        $users_query = DB::table('users')->join('members', 'members.user_id', '=', 'users.id')
             ->join('member_types', 'member_types.id', '=', 'members.member_type_id')
             ->join('member_levels', 'member_levels.id', '=', 'members.member_level_id')
             ->select(
@@ -139,9 +153,7 @@ class MainController extends Controller
                 members.occupation'
                 )
             );
-        if ($request->filled('ward')) {
-            $users_query = $users_query->whereIn('members.ward', $request->ward);
-        }
+
         if ($request->filled('ml')) {
             $users_query = $users_query->whereIn('members.member_level_id', $request->ml);
         }
@@ -158,20 +170,54 @@ class MainController extends Controller
                 });
             }
         }
-        $users_query = $users_query->where('users.nagarcode', $nagarcode);
-        // dd($users_query->toSql(),$users_query->getBindings());
-        if ($request->filled('usestep')) {
-            if ($step == 0) {
-                $users = $users_query->take(10)->orderBy('id', 'desc')->get();
-            } else {
-                $users = $users_query->skip($step * 10)->take(10)->orderBy('id', 'desc')->get();
-            }
-        } else {
+        if($request->filled('nagarcode')){
+            if($nagarcode!="-1"){
+                if ($request->filled('ward')) {
+                    if($request->ward[0]!=null){
+                        $users_query = $users_query->whereIn('members.ward', $request->ward);
+                    }
 
-            $users = $users_query->get();
+                }
+                $users_query = $users_query->where('users.nagarcode', $nagarcode);
+            }
         }
+        // dd($users_query->toSql(),$users_query->getBindings());
+        // if ($request->filled('usestep')) {
+        //     if ($step == 0) {
+        //         $users = $users_query->take(10)->orderBy('id', 'desc')->get();
+        //     } else {
+        //         $users = $users_query->skip($step * 10)->take(20)->orderBy('id', 'desc')->get();
+        //     }
+        // } else {
+
+        // }
+        $users = $users_query->orderBy('users.nagarcode')->orderBy('members.ward')->orderBy('users.name')->paginate(30);
 
         return response()->json($users);
         // return view('admin.member.table', compact('users'));
+    }
+
+    public function singleMember(Request $request)
+    {
+        $user = DB::table('users')->join('members', 'members.user_id', '=', 'users.id')
+        ->join('member_types', 'member_types.id', '=', 'members.member_type_id')
+        ->join('member_levels', 'member_levels.id', '=', 'members.member_level_id')
+        ->select(
+            DB::raw(
+            'users.id,
+            users.name,
+            users.phone,
+            users.email,
+            users.nagarcode,
+            member_types.name as mt,
+            member_levels.name as ml,
+            members.ward,
+            members.address,
+            members.desc,
+            members.image,
+            members.occupation',
+            )
+        )->where('users.id',$request->id)->first();
+        return response()->json($user);
     }
 }
